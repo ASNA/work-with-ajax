@@ -1,0 +1,138 @@
+﻿Using System
+Using System.Text
+Using System.Data
+Using System.Collections
+
+BegClass CustomerByNameList Access( *Public ) Partial( *Yes )
+
+    DclDB pgmDB DBName( "*PUBLIC/dg-local-db" )
+
+    DclDiskFile CustomerByName +
+          Type( *Input  ) +
+          Org( *Indexed ) +
+          Prefix( CustomerByName_ ) +
+          File( "Examples/CMastNewL2" ) +
+          DB( pgmDB ) +
+          ImpOpen( *No )
+
+    DclFld Keys            Type( CustomerByNameFileKeys ) Access( *Public )
+    DclFld RecordsToRead   Type( *Integer4 )
+    DclFld MoreRowsForward Type( *Boolean ) Access( *Public )
+
+    BegConstructor Access( *Public )
+        DclSrParm RecordsToRead Type( *Integer4 )
+
+        *This.RecordsToRead = RecordsToRead
+    EndConstructor
+
+    BegFunc GetFirstRows Type( CustomerByNameBuffer ) Rank( 1 ) Access( *Public )
+        Clear CustomerByName_CMName
+        Clear CustomerByName_CMCustNo
+
+        LeaveSr *This.GetNextRows( CustomerByName_CMName, CustomerByName_CMCustNo )
+    EndFunc
+
+    BegFunc GetPositionToRows Type( CustomerByNameBuffer ) Rank( 1 ) Access( *Public )
+        DclSrParm CMName    Type( *Char ) Len( 40 )
+        DclSrParm CMCustNo  Type( *Packed ) Len( 9,0 )
+
+        Connect pgmDB
+        Open CustomerByName
+
+        CustomerByName_CMName    = CMName
+        CustomerByName_CMCustNo  = CMCustNo
+
+        SetLL CustomerByName Key( CustomerByName_CMName, CustomerByName_CMCustNo )
+
+        LeaveSr GetList()
+    EndFunc
+
+    BegFunc GetNextRows Type( CustomerByNameBuffer ) Rank( 1 ) Access( *Public )
+        DclSrParm CMName    Type( *Char ) Len( 40 )
+        DclSrParm CMCustNo  Type( *Packed ) Len( 9,0 )
+
+        Connect pgmDB
+        Open CustomerByName
+
+        CustomerByName_CMName    = CMName
+        CustomerByName_CMCustNo  = CMCustNo
+
+        SetGT CustomerByName Key( CustomerByName_CMName, CustomerByName_CMCustNo )
+
+        LeaveSr GetList()
+    EndFunc
+
+    BegFunc GetList Type( CustomerByNameBuffer ) Rank( 1 )
+        DclArray p  Type( CustomerByNameBuffer ) Rank( 1 )
+
+        DclFld al Type( ArrayList ) New( *This.RecordsToRead )
+        DclFld i  Type( *Integer4 )
+
+        Do FromVal( 0 ) ToVal( *This.RecordsToRead - 1 ) Index( i )
+            Read CustomerByName
+            If ( CustomerByName.IsEof )
+                Leave
+            EndIf
+            al.Add( GetCustomerByNameBuffer() )
+        EndDo
+
+        p = al.ToArray( *TypeOf( CustomerByNameBuffer ) ) *As CustomerByNameBuffer[]
+
+        *This.Keys = *New CustomerByNameFileKeys( CustomerByName_CMName, CustomerByName_CMCustNo )
+        *This.MoreRowsForward = HasMoreRowsForward()
+
+        Close *All
+        Disconnect pgmDb
+
+        LeaveSr p
+    EndFunc
+
+    BegFunc HasMoreRowsForward Type( *Boolean )
+        SetGT CustomerByName Key( CustomerByName_CMName, CustomerByName_CMCustNo )
+        LeaveSr CustomerByName.IsFound
+    EndFunc
+
+    BegFunc GetCustomerByNameBuffer Type( CustomerByNameBuffer )
+        DclFld o Type( CustomerByNameBuffer ) New()
+
+        o.CMCustNo    = CustomerByName_CMCustNo
+        o.CMName      = CustomerByName_CMName
+        o.CMAddr1     = CustomerByName_CMAddr1
+        o.CMCity      = CustomerByName_CMCity
+        o.CMState     = CustomerByName_CMState
+        o.CMCntry     = CustomerByName_CMCntry
+        o.CMPostCode  = CustomerByName_CMPostCode
+        o.CMActive    = CustomerByName_CMActive
+        o.CMFax       = CustomerByName_CMFax
+        o.CMPhone     = CustomerByName_CMPhone
+
+        LeaveSr o
+    EndFunc
+
+EndClass
+
+BegClass CustomerByNameFileKeys Access( *Public )
+    BegConstructor Access( *Public )
+        DclSrParm CMName    Type( *Char ) Len( 40 )
+        DclSrParm CMCustNo  Type( *Packed ) Len( 9,0 )
+
+        *This.CMName    = CMName
+        *This.CMCustNo  = CMCustNo
+    EndConstructor
+
+    DclProp CMCustNo Type(*Packed) Len(9,0) Access(*Public) 
+    DclProp CMName Type(*Char) Len(40) Access(*Public) 
+EndClass
+
+BegClass CustomerByNameBuffer Access( *Public )
+    DclProp CMCustNo Type(*Packed) Len(9,0) Access(*Public) 
+    DclProp CMName Type(*Char) Len(40) Access(*Public) 
+    DclProp CMAddr1 Type(*Char) Len(35) Access(*Public) 
+    DclProp CMCity Type(*Char) Len(30) Access(*Public) 
+    DclProp CMState Type(*Char) Len(2) Access(*Public) 
+    DclProp CMCntry Type(*Char) Len(2) Access(*Public) 
+    DclProp CMPostCode Type(*Char) Len(10) Access(*Public) 
+    DclProp CMActive Type(*Char) Len(1) Access(*Public) 
+    DclProp CMFax Type(*Packed) Len(10,0) Access(*Public) 
+    DclProp CMPhone Type(*Char) Len(20) Access(*Public) 
+EndClass

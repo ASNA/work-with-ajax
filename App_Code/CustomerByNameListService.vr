@@ -13,14 +13,14 @@ BegClass CustomerByNameListService Access(*Public)
     DclConst ROWS_TO_RETURN Value( 12 ) 
 
     DclFld ContentType     Type( *String ) Inz( "text/plain" ) Access( *Public ) 
-    DclFld ListServiceCore Type( VPS.DataNavigationServices.CustomerByNameList ) New( ROWS_TO_RETURN ) 
+    DclFld ListServiceCore Type( CustomerByNameList ) New( ROWS_TO_RETURN ) 
     DclFld jss             Type( System.Web.Script.Serialization.JavaScriptSerializer ) New()
     DclFld JsonResult      Type( *String ) 
 
     BegFunc GetResponse Access( *Public ) Type( *String ) 
         DclSrParm StartingKey Type( *String ) 
 
-        DclArray Buffer Type( VPS.DataNavigationServices.CustomerByNameBuffer ) Rank( 1 )
+        DclArray Buffer Type( CustomerByNameBuffer ) Rank( 1 )
 
         If ( StartingKey.ToLower() = "*none" ) 
             Buffer = ListServiceCore.GetFirstRows()
@@ -37,7 +37,7 @@ BegClass CustomerByNameListService Access(*Public)
         DclSrParm StartingKey Type( *String ) 
 
         DclArray acList    Type( AutoCompleteItem ) Rank( 1 ) 
-        DclArray Buffer    Type( VPS.DataNavigationServices.CustomerByNameBuffer ) Rank( 1 )
+        DclArray Buffer    Type( CustomerByNameBuffer ) Rank( 1 )
 
         DclFld   acItem    Type( AutoCompleteItem ) 
         DclFld   Index     Type( *Integer4 ) 
@@ -45,7 +45,7 @@ BegClass CustomerByNameListService Access(*Public)
         Buffer = ListServiceCore.GetPositionToRows( StartingKey, 0 ) 
         acList = *New AutoCompleteItem[ Buffer.Length ]
 
-        ForEach b Type( VPS.DataNavigationServices.CustomerByNameBuffer ) Collection( Buffer )
+        ForEach b Type( CustomerByNameBuffer ) Collection( Buffer )
             acItem = *New  AutoCompleteItem( b.CMName.Trim(), b.CMCustNo.ToString() )
             acList[ index ] = acItem 
             index += 1 

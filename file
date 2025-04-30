@@ -1,0 +1,84 @@
+Folder PATH listing
+Volume serial number is DC00-C2BE
+C:.
+¦   .gitignore
+¦   file
+¦   MasterPage.master
+¦   MasterPage.master.vr
+¦   README.md
+¦   Web.config
+¦   Web.config.authentication
+¦   WorkWithAjax.sln
+¦   ~README.md.saved.bak
+¦   
++---.vs
+¦   +---WorkWithAjax
+¦       +---config
+¦       ¦       applicationhost.config
+¦       ¦       
+¦       +---CopilotIndices
+¦       ¦   +---17.13.441.19478
+¦       ¦           CodeChunks.db
+¦       ¦           SemanticSymbols.db
+¦       ¦           
+¦       +---FileContentIndex
+¦       ¦       1dee73c2-d9cf-46a9-bcd5-f14abdb6b398.vsidx
+¦       ¦       a78c0e4a-d677-440a-aeb2-2e1e0fa8f7ea.vsidx
+¦       ¦       
+¦       +---v17
+¦               DocumentLayout.backup.json
+¦               DocumentLayout.json
+¦               
++---App_Code
+¦       AutoCompleteItem.vr
+¦       CustomerByNameList.vr
+¦       CustomerByNameListService.vr
+¦       CustomerList.ashx.vr
+¦       
++---assets
+¦   +---css
+¦   ¦   ¦   CustomerAutoComplete.css
+¦   ¦   ¦   main.css
+¦   ¦   ¦   
+¦   ¦   +---smoothness
+¦   ¦       ¦   jquery-ui-1.8.16.custom.css
+¦   ¦       ¦   jquery-ui-1.8.5.custom.css
+¦   ¦       ¦   
+¦   ¦       +---images
+¦   ¦               images.zip
+¦   ¦               ui-anim_basic_16x16.gif
+¦   ¦               ui-bg_flat_0_aaaaaa_40x100.png
+¦   ¦               ui-bg_flat_75_ffffff_40x100.png
+¦   ¦               ui-bg_glass_55_fbf9ee_1x400.png
+¦   ¦               ui-bg_glass_65_ffffff_1x400.png
+¦   ¦               ui-bg_glass_75_dadada_1x400.png
+¦   ¦               ui-bg_glass_75_e6e6e6_1x400.png
+¦   ¦               ui-bg_glass_95_fef1ec_1x400.png
+¦   ¦               ui-bg_highlight-soft_75_cccccc_1x100.png
+¦   ¦               ui-icons_222222_256x240.png
+¦   ¦               ui-icons_2e83ff_256x240.png
+¦   ¦               ui-icons_454545_256x240.png
+¦   ¦               ui-icons_888888_256x240.png
+¦   ¦               ui-icons_cd0a0a_256x240.png
+¦   ¦               
+¦   +---js
+¦           jquery-1.6.2.min.js
+¦           jquery-ui-1.8.16.custom.min.js
+¦           jquery-ui-1.8.5.custom.min.js
+¦           
++---Bin
+¦       VPS.DataNavigationServices.dll
+¦       VPS.DataNavigationServices.dll.refresh
+¦       VPS.DataNavigationServices.pdb
+¦       
++---services
+¦       CustomerList.ashx
+¦       Handler.ashx
+¦       
++---views
+    +---main
+            CustomerAutoComplete.html
+            Home.aspx
+            Home.aspx.vr
+            SimpleAjaxCall.html
+            

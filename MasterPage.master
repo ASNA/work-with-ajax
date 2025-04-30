@@ -8,9 +8,30 @@
     <link href="Assets/css/main.css" rel="stylesheet" type="text/css" />
     <asp:contentplaceholder id="HeadContentPlaceHolder" runat="server">
     </asp:contentplaceholder>
+
+    <style>
+    .wrapper {        
+        font-size: 1.6rem;
+        padding: 3rem;
+
+        & h1 {
+            font-size: 1.6rem;
+        }
+
+        & .endpoint {
+            font-size: 1.2rem;
+            margin-inline-start: 2rem;
+
+        }
+
+        & div:not(:empty) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    </style>
 </head>
 <body>
-    This is a default master page.
     <form id="form1" runat="server">
     <div>
         <asp:contentplaceholder id="MainContentPlaceHolder" runat="server">

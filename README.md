@@ -1,16 +1,72 @@
 # ASNA Visual RPG Ajax example
 
+[See a short video on this project here-please download it to play it](https://nyc3.digitaloceanspaces.com/asna-assets/videos/work-with-ajax-2025.mp4)
+
+Project map
+
 ```
-├───App_Code
-├───assets
-│   ├───css
-│   │   └───smoothness         <-- Adjusted last item marker for clarity
-│   │       └───images         <-- Adjusted last item marker for clarity
-│   └───js                   <-- Adjusted last item marker for clarity
-├───Bin
-├───services
-└───views                    <-- Adjusted last item marker for clarity
-    └───main 
+¦   .gitignore
+¦   file
+¦   MasterPage.master
+¦   MasterPage.master.vr
+¦   README.md
+¦   Web.config
+¦   Web.config.authentication
+¦   WorkWithAjax.sln
+¦   ~README.md.saved.bak
+¦   
++---App_Code
+¦       AutoCompleteItem.vr
+¦       CustomerByNameList.vr
+¦       CustomerByNameListService.vr
+¦       CustomerList.ashx.vr
+¦       
++---assets
+¦   +---css
+¦   ¦   ¦   CustomerAutoComplete.css
+¦   ¦   ¦   main.css
+¦   ¦   ¦   
+¦   ¦   +---smoothness
+¦   ¦       ¦   jquery-ui-1.8.16.custom.css
+¦   ¦       ¦   jquery-ui-1.8.5.custom.css
+¦   ¦       ¦   
+¦   ¦       +---images
+¦   ¦               images.zip
+¦   ¦               ui-anim_basic_16x16.gif
+¦   ¦               ui-bg_flat_0_aaaaaa_40x100.png
+¦   ¦               ui-bg_flat_75_ffffff_40x100.png
+¦   ¦               ui-bg_glass_55_fbf9ee_1x400.png
+¦   ¦               ui-bg_glass_65_ffffff_1x400.png
+¦   ¦               ui-bg_glass_75_dadada_1x400.png
+¦   ¦               ui-bg_glass_75_e6e6e6_1x400.png
+¦   ¦               ui-bg_glass_95_fef1ec_1x400.png
+¦   ¦               ui-bg_highlight-soft_75_cccccc_1x100.png
+¦   ¦               ui-icons_222222_256x240.png
+¦   ¦               ui-icons_2e83ff_256x240.png
+¦   ¦               ui-icons_454545_256x240.png
+¦   ¦               ui-icons_888888_256x240.png
+¦   ¦               ui-icons_cd0a0a_256x240.png
+¦   ¦               
+¦   +---js
+¦           jquery-1.6.2.min.js
+¦           jquery-ui-1.8.16.custom.min.js
+¦           jquery-ui-1.8.5.custom.min.js
+¦           
++---Bin
+¦       VPS.DataNavigationServices.dll
+¦       VPS.DataNavigationServices.dll.refresh
+¦       VPS.DataNavigationServices.pdb
+¦       
++---services
+¦       CustomerList.ashx
+¦       Handler.ashx
+¦       
++---views
+    +---main
+            CustomerAutoComplete.html
+            Home.aspx
+            Home.aspx.vr
+            SimpleAjaxCall.html
 ```
 ![](https://asna-assets.nyc3.digitaloceanspaces.com/assets/articles/raw-ajax-view.webp)
 
