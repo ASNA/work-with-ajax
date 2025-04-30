@@ -1,0 +1,23 @@
+﻿<%@ Master Language="AVR" AutoEventWireup="false" CodeFile="MasterPage.master.vr" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Default master page</title>
+    <link href="Assets/css/main.css" rel="stylesheet" type="text/css" />
+    <asp:contentplaceholder id="HeadContentPlaceHolder" runat="server">
+    </asp:contentplaceholder>
+</head>
+<body>
+    This is a default master page.
+    <form id="form1" runat="server">
+    <div>
+        <asp:contentplaceholder id="MainContentPlaceHolder" runat="server">
+        </asp:contentplaceholder>
+    </div>
+    </form>
+</body>
+<asp:contentplaceholder id="EndOfPageContentPlaceHolder" runat="server">
+</asp:contentplaceholder>
+</html>

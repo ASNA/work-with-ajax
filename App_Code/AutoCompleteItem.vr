@@ -1,0 +1,17 @@
+﻿BegClass AutoCompleteItem Access( *Public ) 
+    // Lower case field values very important!
+    // The JavaScriptSerializer and JSON.NET uses the exact case of members
+    // to serialize the object to JSON.
+    // The fields 'label' and 'value' need to be lower case in the rendered JSON--
+    // thus they need to be lowercase here.
+    DclFld label Type( *String ) Access( *Public ) 
+    DclFld value Type( *String ) Access( *Public ) 
+    
+    BegConstructor Access( *Public ) 
+        DclSrParm Label     Type( *String )
+        DclSrParm Value     Type( *String ) 
+        
+        *This.Label = Label  
+        *This.Value = Value
+    EndConstructor
+EndClass

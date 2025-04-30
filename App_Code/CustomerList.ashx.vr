@@ -1,0 +1,50 @@
+﻿Using System.Web
+
+BegClass CustomerList Access( *Public ) Implements ( IHttpHandler )
+
+    BegSr ProcessRequest Access(*Public) Implements(IHttpHandler.ProcessRequest)
+        DclSrParm Context Type( HttpContext )
+
+        DclFld ListByName  Type( CustomerByNameListService ) 
+        DclFld Output      Type( *String ) 
+        DclFld Order       Type( *String ) 
+        DclFld StartingKey Type( *String ) 
+
+        Order       = GetArgument( Context, "order" )
+        StartingKey = GetArgument( Context, "startingkey" )
+
+        If      ( Order.ToLower() = "name" ) 
+            ListByName = *New CustomerByNameListService()
+            context.Response.ContentType = ListByName.ContentType
+            Output = ListByName.GetAutoCompleteResponse( StartingKey )
+            context.Response.Write( Output )
+
+        ElseIf  ( Order.ToLower() = "number" ) 
+
+        Else 
+            Context.Response.ContentType = "text/plain"
+            Context.Response.Write( "CustomerList?order=name" )
+            Context.Response.Write( "CustomerList?order=number" )
+        EndIf 
+    EndSr
+
+    BegFunc GetArgument Type( *String ) 
+        DclSrParm Context Type( HttpContext )
+        DclSrParm Key     Type( *String ) 
+
+        DclFld Result Type( *String ) Inz( "*none" ) 
+
+        If ( context.Request.QueryString[ Key ] <> *Nothing ) 
+            Result = context.Request.QueryString[ Key ].ToString()
+        EndIf
+
+        LeaveSr Result
+    EndFunc 
+
+    BegProp IsReusable Type(*Boolean) Access(*Public) Implements(IHttpHandler.IsReusable)
+        BegGet
+            LeaveSr *False
+        EndGet
+    EndProp
+
+EndClass

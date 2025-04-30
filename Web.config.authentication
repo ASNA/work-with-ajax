@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+    <system.web>
+        <compilation debug="true" targetFramework="4.0"/>
+
+        <authentication mode="Forms">
+            <!-- name = name of cookie. -->
+            <forms name="Login form" loginUrl="view/mainmenu/UserLogin.aspx" timeout="1440"/>
+            <!-- 
+                 The timeout value is specified in minutes. 20160 says the authentication
+                 times out in 14 days, ie ( 60 * 24 ) * 14.
+                 (1440 = 24 * 60 = 24 hours)
+                 This value also determines how long the authentication cookie, if used,
+                 persists.
+            -->
+            <!-- For more information:
+            http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpguide/html/cpconaspnetarchitecture.asp  
+            -->
+        </authentication>
+        <!-- deny all unauthorized users -->
+        <authorization>
+            <deny users="?"/>
+        </authorization>        
+    </system.web>
+
+    <location path="assets">
+        <system.web>
+            <authorization>
+                <allow users="?"/>
+            </authorization>
+        </system.web>
+    </location>
+
+
+</configuration>

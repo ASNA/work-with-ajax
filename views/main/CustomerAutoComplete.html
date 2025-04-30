@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Simple autocomplete</title>
+    <link type="text/css" href="../../assets/css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />   
+    <link href="../../assets/css/CustomerAutoComplete.css" type="text/css" rel="stylesheet"/>
+    
+    <style type="text/css">        
+        #exampleInfo 
+        {
+            width: 900px;
+            margin-left: 25px;
+            margin-top: 20px;
+            font-size: 80%;
+        }
+        
+        h2 
+        {
+            margin-left: 25px;
+        }
+    </style>            
+    
+</head>
+
+<body>
+    <a href="../../services/CustomerList.ashx?order=name&startingkey=Smi">Show raw JSON data for names beginning with "Smi."</a><br />
+    <br />
+    <fieldset>
+        <legend>Search for a customer</legend>
+        <label for="textboxCustomerName">Customer name</label> 
+        <input id="textboxCustomerName" placeholder="First few chars of customer name (case counts!)" name="customerName" type="text" />
+        <label for="textboxCustomerNumber">Customer number</label> 
+        <input id="textboxCustomerNumber" type="text" />
+    </fieldset>
+        
+
+    <div id="exampleInfo">
+        <p style="color: red;">
+            Note: This example is very old! It uses jQuery and that is no longer recommended. It's now much better to use native
+            JavaScript. However, it has a little merit in that it shows what's possible. For a better implementation of the core
+            behavior of this page <a href="../views/main/SimpleAjaxCall.html">see this page.</a>
+        </p>
+
+    This example shows how to use Ajax to "autocomplete" a search (sometimes also called 
+    autosuggest or incremental search.). It
+    uses <a href="http://jquery.com/" target="_blank">jQuery</a> and the 
+    <a href="http://docs.jquery.com/UI/Autocomplete" target="_blank">jQueryUI 
+    AutoComplete plugin</a> (for the autocomplete process).<br />
+        <br/>
+    To use the example, just start typing in the textbox. In the "Customer" textbox 
+    type "smi" and in the "State" textbox type "in". Lists are shown after a brief pause
+    in your typing. To avoid flooding the server with search requests, the search doesn't try to search 
+    against every character you type. Searches commence 300ms after you stop typing. 300ms is the 
+    default for the jQueryUI AutoComplete plug-in and seems offers good performance.
+    <br/><br/>
+    You'll notice that the first search is a little slow until the program has been used once. But once 
+    the pump is primed, the performance is excellent.
+    <br/><br/>
+    Don't be fooled by what you see. This isn't presenting a dropdown box (an HTML "select" tag). The input
+    is a simple "input" tag and the jQueryUI Autocomplete plugin builds and displays the result list dynamically
+    in its own div. Because this isn't a "select" tag, you'll have to do something different to store and fetch
+    associated values with a search item. In this case, I chose to park the associated values in hidden fields. 
+    You can see the values in these fields by clicking "Toggle show values." Putting these values in an HTML 
+    hidden field makes the resulting value easily available on the server side. 
+    <br/><br/>
+    The server-side facility of this example is using an HTTP handler to render Json to the AutoComplete plugin. 
+    Use the link below to see what the Json response looks like. (Note that you may need to change the port number 
+    for your version of the project.)
+    <br/><br/>
+    <br/><br/>
+    
+    The beauty of using jQuery to perform this autocomplete task is how little code is required to make the 
+    technique work. Once a few boilerplate pieces are written, this technique can be hooked up to any number 
+    of textboxes with just two lines for each textbox! 
+    </div>
+    
+    <script type="text/javascript" src="../../assets/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/jquery-ui-1.8.16.custom.min.js"></script>
+    
+    <script type="text/javascript">
+        // This example uses jQuery and the jQuery UI's AutoComplete widget. 
+        // See these links:
+        //   http://jquery.com/
+        //   http://jqueryui.com/
+        //   http://jqueryui.com/demos/autocomplete/
+        // This isn't outrageously complex code, but understanding it requires a 
+        // working knowledge of JavaScript and some knowledge of jQuery and 
+        // jQuery UI.
+    
+        $( "#textboxCustomerName" ).autocomplete( {
+            focus : function() {
+                return false;
+            },
+            open : function() {
+                $( "#textboxCustomerNumber" ).val( "" ); 
+            },
+            source : function( req, add ) {
+                var url = "../../services/CustomerList.ashx?order=name&startingkey={key}";
+                var finalUrl = url.replace( "{key}", req.term );
+        
+                $.getJSON( finalUrl, function( data ) {
+                    // If the first data element has a value, then add that data
+                    // to the dropdown.
+                    if ( data[ 0 ] ) {
+                        add( data );
+                    }                        
+                });        
+            },
+            select : function( e, ui ) {
+                $( "#textboxCustomerName" ).val( $.trim( ui.item.label ) );
+                // Note that the AutoComplete widget isn't really a Select tag, but 
+                // rather a div tag that gets built on the fly. Therefore, it's our job
+                // to stash an associated value with the selected item somewhere. I generally
+                // put it in a hidden HTML element. In this case, though, to show it I'm 
+                // simply putting it in an input tag text box.
+                $( "#textboxCustomerNumber" ).val( ui.item.value ); 
+                return false;
+            }
+        });	    
+
+        // Clears the value selection to ensure a 
+        // previously selected value doesn't persist
+        // when the user thinks clearing the search 
+        // text clears the selected object. 
+        $( "#textboxCustomerName" ).blur( function() {
+            var o = $( "#textboxCustomerName" ).val();
+            if ( $.trim( o ) == "" ) {
+                $( "#textboxCustomerNumber" ).val( "" ); 
+            }
+        });
+
+    </script>
+</body>
+
+</html>

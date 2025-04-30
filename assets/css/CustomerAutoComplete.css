@@ -1,0 +1,35 @@
+﻿body 
+{
+    font-family: verdana;
+    font-size: 100%;
+    margin: 3px;
+}
+
+input 
+{
+    font-size: 120%;
+}
+
+#customerName 
+{
+    width: 300px;
+}
+
+.ui-menu-item
+{
+    font-size: 65%;
+}
+.ui-autocomplete
+{
+    width: 320px;
+}                    
+ 
+input#textboxCustomerName
+{
+    width: 480px;
+}
+
+input#textboxCustomerNumber
+{
+    width: 120px;
+}

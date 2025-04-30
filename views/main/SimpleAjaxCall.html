@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Simple Ajax call</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>        
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #textboxStartingKey {
+            width: 16rem;
+        }
+
+        .intro {
+            max-width: 90ch;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <p>
+            This page fetches customer records from the example file Examples/CMastNewL2, ordered by the CMNAME field. To see it in action, first
+            click the "Load" button to show the first "page" of customers. Then click "Next" to see the next page of customers. Continue clicking
+            "Next" to see more pages.
+        </p>
+        <p>
+            To position to a specific customer, enter the first few characters of a customer's name (case sensitive) and
+            click the "Load" button to show the first "page" of customers. Then click "Next" to see the next page of customers. Continue clicking
+            "Next" to see more pages.
+        </p>
+
+    </div>
+
+    <input id="textboxStartingKey" placeholder="First few chars of customer name or blank" type="text" />
+    <input id="buttonLoadPage" type="button" value="Load" />
+    <input id="buttonNextPage" type="button" value="Next" />
+    <div id="target">
+    </div>
+</body>
+
+<script>   
+
+    let lastCustomerName = ""
+
+    const getCustomerPage = async (customerName) => {
+        var apiUrl = `../../services/customerlist.ashx?order=name&startingkey=${customerName}`;
+
+        try {
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const customers = await response.json();
+
+            console.log('Data fetched successfully:');
+
+            const targetElement = document.querySelector("#target");
+
+            lastCustomerName = customers.at(-1).label
+            console.log('lastCustomerNumber', lastCustomerName)
+
+            const content = []
+
+            for (const customer of customers) {
+                content.push(`<div>${customer.label}</div>`)
+            }
+
+            target.innerHTML = content.join('')
+
+        } catch (error) {
+            console.error('Error fetching data:', error);        
+        }
+    }
+
+    const loadButton = document.querySelector('#buttonLoadPage');
+    const nextButton = document.querySelector('#buttonNextPage');
+
+    loadButton.addEventListener('click', async (e) => {
+        const customerNumber = document.querySelector('#textboxStartingKey').value
+
+        await getCustomerPage(customerNumber)
+    
+    });
+
+    nextButton.addEventListener('click', async (e) => {
+        const targetElement = document.querySelector("#target");
+        //targetElement.replaceChildren();
+
+        await getCustomerPage(lastCustomerName)
+    });
+
+</script>
+
+</html>
+
